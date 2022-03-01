@@ -34,6 +34,7 @@ board = [
         ]
 
 start = (0, 0)
+phejejejks
 end = (6, 6)
 
 
