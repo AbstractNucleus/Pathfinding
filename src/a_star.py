@@ -72,56 +72,91 @@ def heuristic(current, goal):
     return math.ceil(math.sqrt((current.x - goal.x)**2 + (current.y - goal.y)**2))
 
 
+def get_current(open_set):
+    f_costs = []
+    for node in open_set:
+        if node.parent != None:
+            node.g = 1 + node.parent.g
+            node.h = heuristic(node, end)
+            node.f = node.g + node.h
+        f_costs.append(node.f)
+
+    return open_set[f_costs.index(min(f_costs))]
+
+
+
 def aStar(start, end):
     open_set = [start]
     closed_set = []
     finished = False
 
-    steps = []
+    log = []
+
 
     while not finished:
-        # Ge varje nod i open_set ett h respektive f-värde
-        f_costs = []
-        for node in open_set:
-            node.h = heuristic(node, end)
-            node.f = node.g + node.h
-            f_costs.append(node.f)
+        #TODO visuals
 
-        
-
-        # Current är den nod som ha lägst f värde och finns i open_set
-        current = open_set[f_costs.index(min(f_costs))]
+        current = get_current(open_set)
         open_set.remove(current)
         closed_set.append(current)
 
-        
-        
-
-        if current == end:
-            finished = True
-
-        print(current.pos)
+        finished = current == end
 
         for neighboor in get_neighboors(current, matrix):
-            if neighboor != None:
-                neighboor.g += 10
-                if (neighboor.wall == True) or (neighboor in closed_set):
-                    continue
+            if neighboor == None:
+                continue
 
-                if (neighboor.g < current.g) or (neighboor not in open_set):
-                    neighboor.h = heuristic(neighboor, end)
-                    neighboor.f = neighboor.g + neighboor.h
-                    if neighboor not in open_set:
-                        open_set.append(neighboor)  
+            neighboor.parent = current
 
-        steps.append(current.pos)
-    
-    print(len(steps))
+            if (neighboor.wall == True) or (neighboor in closed_set):
+                continue
+
+            if (neighboor.g < current.g) or (neighboor not in open_set):
+            
+                if neighboor not in open_set:
+                    open_set.append(neighboor)  
+
+        #checks.append(current.pos)
+
+        log.append({"node": current, "parent": current.parent})
+        print(f"node: {current}, parent: {current.parent}")
+        
+    backtracking = True
+    current = log[-1]
+    path = [current["node"].pos]
+
+    '''for i in range(len(checks)):
+        if current.parent.pos == start.pos:
+            print("hej")
+            quit()
+        path.append(current.parent.pos)
+        current = current.parent
+    print(path)'''
+
+
+
+    while backtracking:
+        print(current["node"].pos)
+        '''if current["node"] == start:
+            backtracking = False'''
+        path.append(current["parent"].pos)
+        current = current["parent"]
+        
+        
+
+
+
+        #print(start)
+
+        #backtracking = False
+        
+
+
 
 
 matrix = convert_matrix(src_matrix)
-start = node(1,0)
-end = node(10, 4)
+start = node(20, 1)
+end = node(20, 23)
 
 aStar(start, end)
 
