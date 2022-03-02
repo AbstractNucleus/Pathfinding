@@ -11,47 +11,7 @@ class Node():
         self.parent = parent
         self.g = 0
         self.h = 0
-        self.f = self.g + self.h
-
-    '''def get_neighboors(self):
-        if self.pos != None:
-            x, y = self.x, self.y
-            
-            # Check if node is a corner
-            if self.pos == (0, 0): 
-                up, left = None, None
-                down, right = matrix[y+1][x], matrix[y][x+1]
-            elif self.pos == (0, self.y_max): 
-                left, down = None, None
-                right, up = matrix[y][x+1], matrix[y-1][x]
-            elif self.pos == (self.x_max, 0): 
-                up, right = None, None
-                down, left = matrix[y+1][x], matrix[y][x-1]
-            elif self.pos == (self.x_max, self.y_max): 
-                down, right = None, None
-                up, left = matrix[y-1][x], matrix[y][x-1]
-            
-            # Check if node is an edge
-            elif ((x > 0) and (x < self.x_max)) and (y == self.y_max): 
-                down = None
-                up, left, right = matrix[y-1][x], matrix[y][x-1], matrix[y][x+1]
-            elif ((x > 0) and (x < self.x_max)) and (y == 0): 
-                up = None
-                down, left, right = matrix[y+1][x], matrix[y][x-1], matrix[y][x+1]
-            elif ((y > 0) and (y < self.y_max)) and (x == self.x_max): 
-                right = None
-            elif ((y > 0) and (y < self.y_max)) and (x == 0): 
-                left = None
-
-            else:
-                up = matrix[y-1][x]      # (x, y-1)
-                down = matrix[y+1][x]    # (x, y+1)
-                left = matrix[y][x-1]    # (x-1, y)
-                right = matrix[y][x+1]   # (x+1, y)
-
-            return [up, down, left, right]
-        else:
-            return None'''
+        self.f = 0
 
 
 def get_neighboors(node, graph):
@@ -109,21 +69,83 @@ def node(x, y):
 
 
 def heuristic(current, goal):
-    return math.ceil(math.sqrt((current[0] - goal[0])**2 + (current[1] - goal[1])**2))
+    return math.ceil(math.sqrt((current.x - goal.x)**2 + (current.y - goal.y)**2))
 
 
 matrix = convert_matrix(src_matrix)
 
 
 start = node(1,0)
-end = node(16, 23)
+end = node(10, 4)
 
 
 def aStar(start, end):
-    open = [start]
-    closed = []
+    open_set = [start]
+    closed_set = []
+    neighboors = []
+    f_costs = []
+    h_costs = []
+    g_costs = []
     finished = False
-    print(get_neighboors(start, matrix))
+
+    while not finished:
+        for node in open_set:
+            node.h = heuristic(node, end)
+            node.f = node.g + node.h
+            h_costs.append(node.h)
+            f_costs.append(node.f)
+
+
+        for i, node in enumerate(open_set):
+            hej
+            
+
+        
+
+
+        '''current = open_set[f_costs.index(min(f_costs))]
+        open_set.remove(current)
+        f_costs.remove(current.f)
+        g_costs.remove(current.g)
+        h_costs.remove(current.h)
+        closed_set.append(current)'''
+
+        
+
+
+        if current == end:
+            finished = True
+
+
+        for neighboor in get_neighboors(current, matrix):
+            if neighboor != None:
+                neighboor.g += 10
+                if (neighboor.wall == True) or (neighboor in closed_set):
+                    continue
+
+                if (neighboor.g < current.g) or (neighboor not in open_set):
+                    neighboor.h = heuristic(neighboor, end)
+                    neighboor.f = neighboor.g + neighboor.h
+                    if neighboor not in open_set:
+                        open_set.append(neighboor)                
+            
+
+
+
+            
+
+
+    '''for open_node in open_set:
+        for neighboor in get_neighboors(open_node, matrix):
+            if neighboor != None:
+                neighboor.g += 10
+                neighboor.h += heuristic(neighboor, end)
+                neighboor.f = neighboor.g + neighboor.h
+                neighboor.parent = open_node
+                #open_set.append(neighboor)
+        closed_set.append(open_node)
+        open_set.remove(open_node)'''
+
 
 
 aStar(start, end)
