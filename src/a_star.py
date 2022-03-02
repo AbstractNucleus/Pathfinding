@@ -96,19 +96,30 @@ def aStar(start, end):
             f_costs.append(node.f)
 
 
-        for i, node in enumerate(open_set):
-            hej
+        open_set = [node_1, node_2, node_3, node_4]
+        f_costs = [2, 5, 2, 3]
+
+        dupes = []
+        singles = []
+
+        for i, f in enumerate(f_costs):
+            if (i, f) not in singles:
+                singles.append((i, f))
+            else:
+                dupes.append((i, f))
+        
+            
             
 
         
 
 
-        '''current = open_set[f_costs.index(min(f_costs))]
+        current = open_set[f_costs.index(min(f_costs))]
         open_set.remove(current)
         f_costs.remove(current.f)
         g_costs.remove(current.g)
         h_costs.remove(current.h)
-        closed_set.append(current)'''
+        closed_set.append(current)
 
         
 
