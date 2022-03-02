@@ -72,61 +72,35 @@ def heuristic(current, goal):
     return math.ceil(math.sqrt((current.x - goal.x)**2 + (current.y - goal.y)**2))
 
 
-matrix = convert_matrix(src_matrix)
-
-
-start = node(1,0)
-end = node(10, 4)
-
-
 def aStar(start, end):
     open_set = [start]
     closed_set = []
-    neighboors = []
-    f_costs = []
-    h_costs = []
-    g_costs = []
     finished = False
 
+    steps = []
+
     while not finished:
+        # Ge varje nod i open_set ett h respektive f-värde
+        f_costs = []
         for node in open_set:
             node.h = heuristic(node, end)
             node.f = node.g + node.h
-            h_costs.append(node.h)
             f_costs.append(node.f)
 
-
-        open_set = [node_1, node_2, node_3, node_4]
-        f_costs = [2, 5, 2, 3]
-
-        dupes = []
-        singles = []
-
-        for i, f in enumerate(f_costs):
-            if (i, f) not in singles:
-                singles.append((i, f))
-            else:
-                dupes.append((i, f))
-        
-            
-            
-
         
 
-
+        # Current är den nod som ha lägst f värde och finns i open_set
         current = open_set[f_costs.index(min(f_costs))]
         open_set.remove(current)
-        f_costs.remove(current.f)
-        g_costs.remove(current.g)
-        h_costs.remove(current.h)
         closed_set.append(current)
 
         
-
+        
 
         if current == end:
             finished = True
 
+        print(current.pos)
 
         for neighboor in get_neighboors(current, matrix):
             if neighboor != None:
@@ -138,26 +112,16 @@ def aStar(start, end):
                     neighboor.h = heuristic(neighboor, end)
                     neighboor.f = neighboor.g + neighboor.h
                     if neighboor not in open_set:
-                        open_set.append(neighboor)                
-            
+                        open_set.append(neighboor)  
+
+        steps.append(current.pos)
+    
+    print(len(steps))
 
 
-
-            
-
-
-    '''for open_node in open_set:
-        for neighboor in get_neighboors(open_node, matrix):
-            if neighboor != None:
-                neighboor.g += 10
-                neighboor.h += heuristic(neighboor, end)
-                neighboor.f = neighboor.g + neighboor.h
-                neighboor.parent = open_node
-                #open_set.append(neighboor)
-        closed_set.append(open_node)
-        open_set.remove(open_node)'''
-
-
+matrix = convert_matrix(src_matrix)
+start = node(1,0)
+end = node(10, 4)
 
 aStar(start, end)
 
