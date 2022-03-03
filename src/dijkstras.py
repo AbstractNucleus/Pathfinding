@@ -1,30 +1,28 @@
-from general import getNeighboors, drawMatrix, backtrack, heuristic
-import random
+from general import getNeighboors, drawMatrix, backtrack
 
-def getCurrent(open_set, end):
-    f_costs = []
+
+def getCurrent(open_set):
+    g_costs = []
     for node in open_set:
         if node.parent != None:
-            node.g = random.randrange(0.1, 1) + node.parent.g
-            node.h = heuristic(node, end, "manhattan")
-            node.f = node.g + node.h
-        f_costs.append(node.f)
+            node.g = 1 + node.parent.g
+        g_costs.append(node.g)
 
-    return open_set[f_costs.index(min(f_costs))]
+    return open_set[g_costs.index(min(g_costs))]
 
 
-def aStar(start, end, src_matrix_copy, matrix):
+def dijkstras(start, end, src_matrix_copy, matrix):
     open_set, closed_set = [start], []
     log = []
 
     while True:
-        current = getCurrent(open_set, end)
+        current = getCurrent(open_set)
         open_set.remove(current)
         closed_set.append(current)
-
+        
         if current != start:
             log.append([current.pos, current.parent.pos])
-        
+
         if current == end:
             break
 
@@ -37,6 +35,8 @@ def aStar(start, end, src_matrix_copy, matrix):
                     neighboor.parent = current
                     open_set.append(neighboor)  
 
+        
+    
     return drawMatrix(src_matrix_copy, backtrack(log, start))
 
 
