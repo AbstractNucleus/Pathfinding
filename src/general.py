@@ -1,6 +1,7 @@
 from copy import deepcopy
 from math import ceil, sqrt
 import json
+import random
 
 
 class Node():
@@ -26,7 +27,7 @@ def getNeighboors(node, graph):
     down_right = graph[y+1][x+1]    # (x+1, y+1)
     down_left = graph[y+1][x-1]     # (x-1, y+1)
     up_right = graph[y-1][x+1]      # (x+1, y-1)
-
+# up_left, up_right, down_left, down_right
     return [up, down, left, right, up_left, up_right, down_left, down_right]
 
 
@@ -121,8 +122,7 @@ def getGraph():
     return json.loads(open("src\graph.json", "r").read())
 
 
-def solve(start, end, algorithm):
-    matrix = getGraph()
+def solve(matrix, start, end, algorithm):
     src_matrix_copy = deepcopy(matrix)
     matrix = convertMatrix(matrix)
     start = node(start[0], start[1], matrix)
@@ -169,9 +169,18 @@ def createGraph(x, y):
         else:
             res += f"{i}\n"
             res += "]"
+            
     open("src/graph.json", "w").write(res)
     print(f"Your graph has been created with size: {x} x {y}")
     print(f"Graph has been saved to graph.json")
     viewGraph(matrix)
+    
+def randomwalls(graph):
+    for i,y in enumerate(graph):
+        for j,x in enumerate(y):
+            if i%3 == 0:
+                if x == 0:
+                    graph[i][j] = random.randint(0,1)
+    return graph
     
     

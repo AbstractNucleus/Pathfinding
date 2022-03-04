@@ -5,7 +5,7 @@ def getCurrent(open_set, end):
     f_costs = []
     for node in open_set:
         if node.parent != None:
-            node.g = 1 + node.parent.g
+            node.g = 10 + node.parent.g
             node.h = heuristic(node, end, "manhattan")
             node.f = node.g + node.h
         f_costs.append(node.f)
