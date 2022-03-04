@@ -1,5 +1,4 @@
 from general import getNeighboors, drawMatrix, backtrack, heuristic
-import random
 
 def getCurrent(open_set, end):
     f_costs = []

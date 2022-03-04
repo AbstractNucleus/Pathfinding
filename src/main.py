@@ -1,17 +1,16 @@
 from general import createGraph, getGraph, solve, viewGraph, randomwalls
 from a_star import aStar
 from dijkstras import dijkstras
-import random
-import math
+
 
 #def randomwalls(graph):
 
 graph = getGraph()
-start = (1,1)
-end = (45, 23 )
-graph = randomwalls(graph)
+start = (10,10)
+end = (75, 45)
+#graph = randomwalls(graph)
 
 
-#createGraph(50, 25)
+#createGraph(150, 75)
 #viewGraph(graph)
-solve(graph,start, end, aStar)
+solve(graph, start, end, aStar)
