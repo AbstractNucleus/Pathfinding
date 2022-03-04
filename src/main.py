@@ -4,10 +4,10 @@ from dijkstras import dijkstras
 
 
 graph = getGraph()
-start = (1, 1)
-end = (80, 45)
+start = (24, 11)
+end = (30, 13)
 
 
-#createGraph(100, 50)
+#createGraph(50, 25)
 #viewGraph(graph)
 solve(start, end, aStar)
