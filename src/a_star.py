@@ -11,14 +11,16 @@ def getCurrent(open_set, end):
     return open_set[f_costs.index(min(f_costs))]
 
 
-def aStar(start, end, src_matrix_copy, matrix):
+def aStar(start, end, src_matrix_copy, matrix): 
     open_set, closed_set = [start], []
     log = []
 
     while True:
+        # för in loggen i getCurrent för att se var 
+        # den kom ifrån för att avgöra om det är diagonalt eller rakt
         current = getCurrent(open_set, end)
         if current.parent != None:
-            current.g = 1 + current.parent.g
+            current.g = 10 + current.parent.g
         open_set.remove(current)
         closed_set.append(current)
 
@@ -35,7 +37,7 @@ def aStar(start, end, src_matrix_copy, matrix):
             if (current.g < neighboor.g) or (neighboor not in open_set):
                 if neighboor not in open_set:
                     neighboor.parent = current
-                    open_set.append(neighboor)  
+                    open_set.append(neighboor)
 
     return drawMatrix(src_matrix_copy, backtrack(log, start))
 
