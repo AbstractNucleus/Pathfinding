@@ -178,7 +178,7 @@ def createGraph(x, y):
 def randomwalls(graph):
     for i,y in enumerate(graph):
         for j,x in enumerate(y):
-            if i%3 == 0:
+            if i%4 == 0:
                 if x == 0:
                     graph[i][j] = random.randint(0,1)
     return graph
