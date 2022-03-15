@@ -7,11 +7,11 @@ from dijkstras import dijkstras
 #def randomwalls(graph):
 
 graph = getGraph()
-start = (10,10)
-end = (60, 30)
+start = (1, 1)
+end = (48, 48)
 #graph = randomwalls(graph)
 
 
-#createGraph(70, 40)
+#createGraph(50, 50)
 #viewGraph(graph)
-solve(graph, start, end, aStar)
+solve(graph, start, end, dijkstras)

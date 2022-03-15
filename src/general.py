@@ -28,7 +28,7 @@ def getNeighboors(node, graph):
     down_left = graph[y+1][x-1]     # (x-1, y+1)
     up_right = graph[y-1][x+1]      # (x+1, y-1)
 # up_left, up_right, down_left, down_right
-    return [up, down, left, right, up_left, up_right, down_left, down_right]
+    return [up, down, left, right]
 
 
 def convertMatrix(matrix):
